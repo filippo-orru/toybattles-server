@@ -412,7 +412,6 @@ CastServer/x64/
 CastServer/Release/
 Common/Release/
 Common/x64/
-ExternalLibraries/vcpkg/
 MainServer/x64/
 MainServer/Release/
 Microvolts-Emulator-V2/
