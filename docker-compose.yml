@@ -1,0 +1,80 @@
+services:
+  db:
+    image: mariadb:10.11
+    container_name: toybattles-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: microvolts-db
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: $DB_PASSWORD
+      MYSQL_PASSWORD: $DB_PASSWORD
+    env_file:
+      - .env
+    ports:
+      - "3305:3306"
+    volumes:
+      - ./db_data:/var/lib/mysql
+      - ./microvolts-db.sql:/docker-entrypoint-initdb.d/microvolts-db.sql
+    networks:
+      - microvolts-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  auth-server:
+    build: .
+    command: ["/app/Output/AuthServer.elf"]
+    container_name: toybattles-auth
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    ports:
+      - "13000:13000"
+    volumes:
+      - ./Setup/config.ini:/app/Setup/config.ini:ro
+    networks:
+      - microvolts-network
+
+  main-server:
+    build: .
+    command: ["/app/Output/MainServer.elf"]
+    container_name: toybattles-main
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    ports:
+      - "13005:13005"
+      - "14005:14005"
+    volumes:
+      - ./Setup/config.ini:/app/Setup/config.ini:ro
+    networks:
+      - microvolts-network
+
+  cast-server:
+    build: .
+    command: ["/app/Output/CastServer.elf"]
+    container_name: toybattles-cast
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    ports:
+      - "13006:13006"
+      - "14006:14006"
+    volumes:
+      - ./Setup/config.ini:/app/Setup/config.ini:ro
+    networks:
+      - microvolts-network
+
+networks:
+  microvolts-network:
+    driver: bridge

@@ -418,8 +418,7 @@ MainServer/Release/
 Microvolts-Emulator-V2/
 
 ExternalLibraries/CommonLib/Common.lib
-E x t e r n a l L i b r a r i e s / C o m m o n . l i b 
- 
- E x t e r n a l L i b r a r i e s / C o m m o n . l i b 
- 
- 
+
+db_data/
+**/.DS_Store
+.env
