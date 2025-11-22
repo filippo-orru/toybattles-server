@@ -1,8 +1,8 @@
 *
-!AuthServer/
-!CastServer/
-!Common/
-!ExternalLibraries/
-!MainServer/
+!AuthServer
+!CastServer
+!Common
+!ExternalLibraries
+!MainServer
 !CMakeLists.txt
 !vcpkg.json
