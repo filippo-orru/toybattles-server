@@ -25,11 +25,12 @@ RUN apt-get install -y \
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 50 \
     && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 50
 
-COPY ./ExternalLibraries/ /app/ExternalLibraries/
+COPY ./ExternalLibraries/vcpkg /app/ExternalLibraries/vcpkg
 COPY ./vcpkg.json /app/vcpkg.json
     
 RUN ./ExternalLibraries/vcpkg/bootstrap-vcpkg.sh
-RUN ./ExternalLibraries/vcpkg/vcpkg install
+ENV VCPKG_BINARY_SOURCES=files,/cache/vcpkg
+RUN --mount=type=cache,target=/cache/vcpkg ./ExternalLibraries/vcpkg/vcpkg install
     
 COPY . /app
 
