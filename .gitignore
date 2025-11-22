@@ -425,3 +425,4 @@ db_data/
 
 build/
 vcpkg_installed/
+Setup/config.ini
