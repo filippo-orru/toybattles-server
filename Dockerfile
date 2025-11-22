@@ -49,8 +49,6 @@ COPY --from=builder /app/AuthServer.elf .
 COPY --from=builder /app/MainServer.elf .
 COPY --from=builder /app/CastServer.elf .
 
-ENV MV_DB_PW=default_password
-
 EXPOSE 13000 13005 13006
 
 CMD ["/bin/bash", "-c", "echo You need to specify a command to start one of the servers."]
