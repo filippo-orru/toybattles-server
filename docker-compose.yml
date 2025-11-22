@@ -5,9 +5,9 @@ services:
     restart: on-failure:5
     environment:
       MYSQL_DATABASE: microvolts-db
-      MYSQL_USER: root
-      MYSQL_ROOT_PASSWORD: $DB_PASSWORD
-      MYSQL_PASSWORD: $DB_PASSWORD
+      MYSQL_USER: admin
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     env_file:
       - .env
     ports:
