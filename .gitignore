@@ -422,3 +422,6 @@ ExternalLibraries/CommonLib/Common.lib
 db_data/
 **/.DS_Store
 .env
+
+build/
+vcpkg_installed/

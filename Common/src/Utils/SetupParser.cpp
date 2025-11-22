@@ -61,7 +61,6 @@ namespace Common
                     std::string mainIp = mainServer["Ip"].as<std::string>();
                     std::uint32_t mainPort = mainServer["Port"].as<std::uint32_t>();
                     std::uint32_t mainIpcPort = mainServer["IpcPort"].as<std::uint32_t>();
-                    std::string mainLocalIp = mainServer["LocalIp"].as<std::string>(); 
                     bool isPublic = mainServer["IsPublic"].as<bool>();
 
                     if (mainIp.empty() || mainPort == 0 || mainIpcPort == 0)
@@ -74,21 +73,10 @@ namespace Common
                     std::string castIp = castServer["Ip"].as<std::string>();
                     std::uint32_t castPort = castServer["Port"].as<std::uint32_t>();
                     std::uint32_t castIpcPort = castServer["IpcPort"].as<std::uint32_t>();
-                    std::string castLocalIp = castServer["LocalIp"].as<std::string>();
 
                     if (castIp.empty() || castPort == 0 || castIpcPort == 0)
                     {
                         ::Utils::Logger::log(castServerSection + " has wrong data in config.ini", ::Utils::LogType::Error, "SetupParser::checkMainCastSession");
-                        return false;
-                    }
-
-                    bool isMainLocalIpMatching = (mainLocalIp == *localIp);
-                    bool isCastLocalIpMatching = (castLocalIp == *localIp);
-
-                    if ((isMainLocalIpMatching && !isCastLocalIpMatching) || (!isMainLocalIpMatching && isCastLocalIpMatching))
-                    {
-                        ::Utils::Logger::log("MainServer and CastServer LocalIps don't match the current local IP", ::Utils::LogType::Error, 
-                            "SetupParser::checkMainCastSession");
                         return false;
                     }
 
@@ -141,9 +129,7 @@ namespace Common
             ini::IniSection& database = m_iniFile[databaseSection];
             const std::string passwordEnv = database["PasswordEnvironmentName"].as<std::string>();
 
-            if (database["LocalIp"].as<std::string>().empty() || database["Ip"].as<std::string>().empty()
-                || database["Port"].as<std::uint32_t>() == 0 || database["DatabaseName"].as<std::string>().empty()
-                || database["Username"].as<std::string>().empty() || passwordEnv.empty())
+            if (database["Ip"].as<std::string>().empty() || database["Port"].as<std::uint32_t>() == 0 || database["DatabaseName"].as<std::string>().empty() || database["Username"].as<std::string>().empty() || passwordEnv.empty())
             {
                 ::Utils::Logger::log("Invalid database configuration in config.ini", ::Utils::LogType::Error, "SetupParser::checkDatabaseConfig");
                 return false;
@@ -243,10 +229,7 @@ namespace Common
 
             for (const auto mainServerInfo : *mainServersInfoOpt)
             {
-                if (mainServerInfo.localIp == m_localIp)
-                {
-                    return mainServerInfo;
-                }
+                return mainServerInfo;
             }
             return std::nullopt;
         }
@@ -286,7 +269,7 @@ namespace Common
                     main.port = section["Port"].as<std::uint32_t>();
                     main.ipcPort = section["IpcPort"].as<std::uint32_t>();
                     main.serverNumber = std::stoi(sectionName.substr(11));
-                    main.localIp = section["LocalIp"].as<std::string>();
+                    main.localIp = m_localIp;
                     main.isPublic = section["IsPublic"].as<bool>();
                   
                     mainServers.push_back(main);
@@ -311,7 +294,7 @@ namespace Common
                     cast.port = section["Port"].as<std::uint32_t>();
                     cast.ipcPort = section["IpcPort"].as<std::uint32_t>();
                     cast.serverNumber = std::stoi(sectionName.substr(11));
-                    cast.localIp = section["LocalIp"].as<std::string>();
+                    cast.localIp = m_localIp;
                     castServers.push_back(cast);
                 }
             }
