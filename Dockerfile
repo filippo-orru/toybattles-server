@@ -32,7 +32,12 @@ RUN ./ExternalLibraries/vcpkg/bootstrap-vcpkg.sh
 ENV VCPKG_BINARY_SOURCES=files,/cache/vcpkg
 RUN --mount=type=cache,target=/cache/vcpkg ./ExternalLibraries/vcpkg/vcpkg install
 
-COPY . /app
+COPY ./AuthServer /app/AuthServer
+COPY ./CastServer /app/CastServer
+COPY ./Common /app/Common
+COPY ./ExternalLibraries /app/ExternalLibraries
+COPY ./MainServer /app/MainServer
+COPY ./CMakeLists.txt /app/
 
 RUN cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=ExternalLibraries/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release \
     && cmake --build build --config Release
