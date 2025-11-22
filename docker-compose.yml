@@ -15,8 +15,6 @@ services:
     volumes:
       - ./db_data:/var/lib/mysql
       - ./microvolts-db.sql:/docker-entrypoint-initdb.d/microvolts-db.sql
-    networks:
-      - microvolts-network
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 20s
@@ -36,8 +34,6 @@ services:
       - "13000:13000"
     volumes:
       - ./Setup/config.ini:/app/Setup/config.ini:ro
-    networks:
-      - microvolts-network
 
   main-server:
     build: .
@@ -55,8 +51,6 @@ services:
     volumes:
       - ./Setup/config.ini:/app/Setup/config.ini:ro
       - ./data/:/app/data/:ro
-    networks:
-      - microvolts-network
 
   cast-server:
     build: .
@@ -74,9 +68,3 @@ services:
     volumes:
       - ./Setup/config.ini:/app/Setup/config.ini:ro
       - ./data/:/app/data/:ro
-    networks:
-      - microvolts-network
-
-networks:
-  microvolts-network:
-    driver: bridge
