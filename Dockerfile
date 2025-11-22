@@ -45,9 +45,9 @@ RUN apt-get install -y \
 
 RUN mkdir -p /app/Output
 
-COPY --from=builder /app/build/AuthServer/AuthServer.elf /app/Output/
-COPY --from=builder /app/build/MainServer/MainServer.elf /app/Output/
-COPY --from=builder /app/build/CastServer/CastServer.elf /app/Output/
+COPY --from=builder /app/AuthServer.elf /app/
+COPY --from=builder /app/MainServer.elf /app/
+COPY --from=builder /app/CastServer.elf /app/
 COPY --from=builder /app/ExternalLibraries/cgd_original /app/ExternalLibraries/cgd_original
 
 ENV MV_DB_PW=default_password
