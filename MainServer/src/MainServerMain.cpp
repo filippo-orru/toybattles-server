@@ -34,7 +34,7 @@ void printInitialInformation()
 
 void initializeCdbFiles()
 {
-	const std::string cdbItemInfoPath = "../ExternalLibraries/cgd_original/ENG";
+	const std::string cdbItemInfoPath = "data/cgd_original/ENG";
 	const std::string cdbItemInfoName = "iteminfo.cdb";
 	const std::string cdbWeaponItemInfoName = "itemweaponsinfo.cdb";
 

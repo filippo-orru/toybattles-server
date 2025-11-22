@@ -54,7 +54,7 @@ services:
       - "14005:14005"
     volumes:
       - ./Setup/config.ini:/app/Setup/config.ini:ro
-      - ./ExternalLibraries/:/app/ExternalLibraries/:ro
+      - ./data/:/app/data/:ro
     networks:
       - microvolts-network
 
@@ -73,7 +73,7 @@ services:
       - "14006:14006"
     volumes:
       - ./Setup/config.ini:/app/Setup/config.ini:ro
-      - ./ExternalLibraries/:/app/ExternalLibraries/:ro
+      - ./data/:/app/data/:ro
     networks:
       - microvolts-network
 

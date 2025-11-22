@@ -43,7 +43,7 @@ RUN apt-get install -y \
     libssl3 \
     libmariadb3
 
-WORKDIR /app/out
+WORKDIR /app
 
 COPY --from=builder /app/AuthServer.elf .
 COPY --from=builder /app/MainServer.elf .

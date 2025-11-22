@@ -16,7 +16,7 @@ namespace Common
     {
         SetupParser::SetupParser()
         {
-            m_iniFile.load("../Setup/config.ini");
+            m_iniFile.load("Setup/config.ini");
             if (!sanityCheck())
             {
                 handleError("Sanity check failed");
