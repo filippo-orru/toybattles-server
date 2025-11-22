@@ -2,7 +2,7 @@ services:
   db:
     image: mariadb:10.11
     container_name: toybattles-db
-    restart: unless-stopped
+    restart: on-failure:5
     environment:
       MYSQL_DATABASE: microvolts-db
       MYSQL_USER: root
@@ -26,7 +26,7 @@ services:
     build: .
     command: ["/app/AuthServer.elf"]
     container_name: toybattles-auth
-    restart: unless-stopped
+    restart: on-failure:5
     depends_on:
       db:
         condition: service_healthy
@@ -43,7 +43,7 @@ services:
     build: .
     command: ["/app/MainServer.elf"]
     container_name: toybattles-main
-    restart: unless-stopped
+    restart: on-failure:5
     depends_on:
       db:
         condition: service_healthy
@@ -61,7 +61,7 @@ services:
     build: .
     command: ["/app/CastServer.elf"]
     container_name: toybattles-cast
-    restart: unless-stopped
+    restart: on-failure:5
     depends_on:
       db:
         condition: service_healthy
