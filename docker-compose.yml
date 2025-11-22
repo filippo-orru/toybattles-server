@@ -24,7 +24,7 @@ services:
 
   auth-server:
     build: .
-    command: ["/app/out/AuthServer.elf"]
+    command: ["./AuthServer.elf"]
     container_name: toybattles-auth
     restart: on-failure:5
     depends_on:
@@ -41,7 +41,7 @@ services:
 
   main-server:
     build: .
-    command: ["/app/out/MainServer.elf"]
+    command: ["./MainServer.elf"]
     container_name: toybattles-main
     restart: on-failure:5
     depends_on:
@@ -60,7 +60,7 @@ services:
 
   cast-server:
     build: .
-    command: ["/app/out/CastServer.elf"]
+    command: ["./CastServer.elf"]
     container_name: toybattles-cast
     restart: on-failure:5
     depends_on:
