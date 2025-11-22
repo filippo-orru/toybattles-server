@@ -24,6 +24,7 @@ services:
     build: .
     command: ["./AuthServer.elf"]
     container_name: toybattles-auth
+    stop_grace_period: 1s
     restart: on-failure:5
     depends_on:
       db:
@@ -39,6 +40,7 @@ services:
     build: .
     command: ["./MainServer.elf"]
     container_name: toybattles-main
+    stop_grace_period: 1s
     restart: on-failure:5
     depends_on:
       db:
@@ -56,6 +58,7 @@ services:
     build: .
     command: ["./CastServer.elf"]
     container_name: toybattles-cast
+    stop_grace_period: 1s
     restart: on-failure:5
     depends_on:
       db:
