@@ -1,7 +1,6 @@
 services:
   db:
     image: mariadb:10.11
-    container_name: toybattles-db
     restart: on-failure:5
     environment:
       MYSQL_DATABASE: microvolts-db
@@ -16,14 +15,13 @@ services:
       - ./db_data:/var/lib/mysql
       - ./microvolts-db.sql:/docker-entrypoint-initdb.d/microvolts-db.sql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 20s
+      test: ["CMD", "mysqladmin", "-u$MYSQL_USER", "-p$MYSQL_PASSWORD",  "ping", "-h", "localhost"]
+      timeout: 5s
       retries: 10
 
   auth-server:
     build: .
     command: "auth"
-    container_name: toybattles-auth
     stop_grace_period: 2s
     restart: on-failure:5
     depends_on:
@@ -39,7 +37,6 @@ services:
   main-server:
     build: .
     command: "main"
-    container_name: toybattles-main
     stop_grace_period: 2s
     restart: on-failure:5
     depends_on:
@@ -57,7 +54,6 @@ services:
   cast-server:
     build: .
     command: "cast"
-    container_name: toybattles-cast
     stop_grace_period: 2s
     restart: on-failure:5
     depends_on:

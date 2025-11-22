@@ -1,3 +1,6 @@
+#!/bin/bash
+set -e
+
 trap "exit" SIGINT SIGTERM
 
 if [ "$1" = 'auth' ]; then
