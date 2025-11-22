@@ -58,4 +58,4 @@ COPY --from=builder /app/CastServer.elf .
 COPY ./docker/docker-entrypoint.sh .
 RUN chmod +x ./docker-entrypoint.sh
 
-ENTRYPOINT ["./docker-entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "./docker-entrypoint.sh"]
