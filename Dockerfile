@@ -25,12 +25,13 @@ RUN apt-get install -y \
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 50 \
     && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 50
 
-COPY ./ExternalLibraries/vcpkg /app/ExternalLibraries/vcpkg
+# Clone vcpkg and install dependencies. Do not use local vcpkg to ensure a clean build environment.
+# We could consider pinning vcpkg to a specific commit for reproducible builds.
+RUN git clone https://github.com/microsoft/vcpkg.git ExternalLibraries/vcpkg
 COPY ./vcpkg.json /app/vcpkg.json
 
 RUN ./ExternalLibraries/vcpkg/bootstrap-vcpkg.sh
-ENV VCPKG_BINARY_SOURCES=files,/cache/vcpkg
-RUN --mount=type=cache,target=/cache/vcpkg ./ExternalLibraries/vcpkg/vcpkg install
+RUN --mount=type=cache,target=/cache/vcpkg VCPKG_BINARY_SOURCES=files,/cache/vcpkg ./ExternalLibraries/vcpkg/vcpkg install
 
 COPY ./AuthServer /app/AuthServer
 COPY ./CastServer /app/CastServer

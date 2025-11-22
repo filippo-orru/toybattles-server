@@ -3,9 +3,7 @@
 !CastServer/
 !Common/
 !ExternalLibraries/
-ExternalLibraries/vcpkg/buildtrees/
-ExternalLibraries/vcpkg/downloads/
-ExternalLibraries/vcpkg/packages/
+ExternalLibraries/vcpkg/
 !MainServer/
 !CMakeLists.txt
 !vcpkg.json
