@@ -6,3 +6,4 @@
 !MainServer/
 !CMakeLists.txt
 !vcpkg.json
+!docker/
