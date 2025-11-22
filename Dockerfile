@@ -43,12 +43,11 @@ RUN apt-get install -y \
     libssl3 \
     libmariadb3
 
-RUN mkdir -p /app/Output
+RUN mkdir -p /app/out
 
-COPY --from=builder /app/AuthServer.elf /app/
-COPY --from=builder /app/MainServer.elf /app/
-COPY --from=builder /app/CastServer.elf /app/
-COPY --from=builder /app/ExternalLibraries/cgd_original /app/ExternalLibraries/cgd_original
+COPY --from=builder /app/AuthServer.elf /app/out/
+COPY --from=builder /app/MainServer.elf /app/out/
+COPY --from=builder /app/CastServer.elf /app/out/
 
 ENV MV_DB_PW=default_password
 

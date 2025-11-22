@@ -24,7 +24,7 @@ services:
 
   auth-server:
     build: .
-    command: ["/app/AuthServer.elf"]
+    command: ["/app/out/AuthServer.elf"]
     container_name: toybattles-auth
     restart: on-failure:5
     depends_on:
@@ -35,13 +35,13 @@ services:
     ports:
       - "13000:13000"
     volumes:
-      - ./Setup/config.ini:/app/config.ini:ro
+      - ./Setup/config.ini:/app/Setup/config.ini:ro
     networks:
       - microvolts-network
 
   main-server:
     build: .
-    command: ["/app/MainServer.elf"]
+    command: ["/app/out/MainServer.elf"]
     container_name: toybattles-main
     restart: on-failure:5
     depends_on:
@@ -53,13 +53,14 @@ services:
       - "13005:13005"
       - "14005:14005"
     volumes:
-      - ./Setup/config.ini:/app/config.ini:ro
+      - ./Setup/config.ini:/app/Setup/config.ini:ro
+      - ./ExternalLibraries/:/app/ExternalLibraries/:ro
     networks:
       - microvolts-network
 
   cast-server:
     build: .
-    command: ["/app/CastServer.elf"]
+    command: ["/app/out/CastServer.elf"]
     container_name: toybattles-cast
     restart: on-failure:5
     depends_on:
@@ -71,7 +72,8 @@ services:
       - "13006:13006"
       - "14006:14006"
     volumes:
-      - ./Setup/config.ini:/app/config.ini:ro
+      - ./Setup/config.ini:/app/Setup/config.ini:ro
+      - ./ExternalLibraries/:/app/ExternalLibraries/:ro
     networks:
       - microvolts-network
 

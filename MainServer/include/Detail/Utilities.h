@@ -112,10 +112,10 @@ namespace Main
 
 			if (predefinedItems.empty()) 
 			{
-				std::ifstream file("../RewardItemIDs.txt");
+				std::ifstream file("../ExternalLibraries/RewardItemIDs.txt");
 				if (!file.is_open())
 				{
-					std::cerr << "[Utilities::generateRewards] error while opening file RewardItemIDs.txt\n";
+					std::cerr << "[Utilities::generateRewards] error while opening file ../ExternalLibraries/RewardItemIDs.txt\n";
 					return rewards;
 				}
 
