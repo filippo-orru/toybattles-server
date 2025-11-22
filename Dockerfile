@@ -27,11 +27,11 @@ RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 50 \
 
 COPY ./ExternalLibraries/vcpkg /app/ExternalLibraries/vcpkg
 COPY ./vcpkg.json /app/vcpkg.json
-    
+
 RUN ./ExternalLibraries/vcpkg/bootstrap-vcpkg.sh
 ENV VCPKG_BINARY_SOURCES=files,/cache/vcpkg
 RUN --mount=type=cache,target=/cache/vcpkg ./ExternalLibraries/vcpkg/vcpkg install
-    
+
 COPY . /app
 
 RUN cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=ExternalLibraries/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release \
@@ -49,4 +49,7 @@ COPY --from=builder /app/AuthServer.elf .
 COPY --from=builder /app/MainServer.elf .
 COPY --from=builder /app/CastServer.elf .
 
-CMD ["/bin/bash", "-c", "echo You need to specify a command to start one of the servers."]
+COPY ./docker/docker-entrypoint.sh .
+RUN chmod +x ./docker-entrypoint.sh
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
