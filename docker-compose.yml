@@ -15,9 +15,11 @@ services:
       - ./db_data:/var/lib/mysql
       - ./microvolts-db.sql:/docker-entrypoint-initdb.d/microvolts-db.sql
     healthcheck:
-      test: ["CMD", "mysqladmin", "-u$MYSQL_USER", "-p$MYSQL_PASSWORD",  "ping", "-h", "localhost"]
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u admin -p$DB_PASSWORD"]
+      start_period: 2s
+      interval: 10s
       timeout: 5s
-      retries: 10
+      retries: 3
 
   auth-server:
     build: .
