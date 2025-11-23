@@ -6,6 +6,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Prefer Ninja generator if available
 set(CMAKE_GENERATOR "Ninja" CACHE STRING "Build system generator" FORCE)
+if (WIN32)
+    add_compile_definitions(_WIN32_WINNT=0x0601)
+    if (MSVC)
+        add_compile_options(/bigobj)
+    endif()
+endif()
 
 set(Boost_NO_BOOST_CMAKE ON)
 set(Boost_NO_BOOST_VERSION_CHECK ON)
