@@ -40,7 +40,7 @@ COPY ./ExternalLibraries /app/ExternalLibraries
 COPY ./MainServer /app/MainServer
 COPY ./CMakeLists.txt /app/
 
-RUN cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=ExternalLibraries/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release \
+RUN cmake -B build -S . -G Ninja -DCMAKE_TOOLCHAIN_FILE=ExternalLibraries/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release \
     && cmake --build build --config Release
 
 FROM base AS runtime

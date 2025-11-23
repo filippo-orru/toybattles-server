@@ -1,9 +1,11 @@
-
 cmake_minimum_required(VERSION 3.26)
 project(Microvolts-Emulator-V2 LANGUAGES C CXX ASM)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Prefer Ninja generator if available
+set(CMAKE_GENERATOR "Ninja" CACHE STRING "Build system generator" FORCE)
 
 set(Boost_NO_BOOST_CMAKE ON)
 set(Boost_NO_BOOST_VERSION_CHECK ON)
