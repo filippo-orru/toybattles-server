@@ -31,8 +31,8 @@ int main()
 	asio::io_context io_context;
 
 	auto parsedServerInfo = Common::Utils::SetupParser::getInstance().getSelfCastServerInfo();
-	Utils::Logger::log(std::format("Server Information: IP: {},  Port: {},  IPC Port: {},  Server Number: {}",
-		parsedServerInfo.ip, parsedServerInfo.port,
+	Utils::Logger::log(std::format("Server Information: Host: {},  Port: {},  IPC Port: {},  Server Number: {}",
+		parsedServerInfo.host, parsedServerInfo.port,
 		parsedServerInfo.ipcPort, parsedServerInfo.serverNumber),
 		Utils::LogType::Normal);
 
@@ -53,7 +53,7 @@ int main()
 
 	Utils::Logger::log(banner, Utils::LogType::Info);
 
-	Cast::CastServer srv(io_context, parsedServerInfo.ip, parsedServerInfo.port, parsedServerInfo.ipcPort, parsedServerInfo.serverNumber);
+	Cast::CastServer srv(io_context, parsedServerInfo.host, parsedServerInfo.port, parsedServerInfo.ipcPort, parsedServerInfo.serverNumber);
 
 	srv.asyncAccept();
 	srv.asyncAcceptMainServer();

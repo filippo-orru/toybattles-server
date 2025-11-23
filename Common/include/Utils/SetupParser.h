@@ -14,12 +14,14 @@ namespace Common
     {
         struct AuthSetup
         {
+            std::string host;
             std::string ip;
             std::uint32_t port;
         };
 
         struct MainSetup
         {
+            std::string host;
             std::string ip;
             std::string localIp;
             std::uint32_t port;
@@ -30,6 +32,7 @@ namespace Common
 
         struct CastSetup
         {
+            std::string host;
             std::string ip;
             std::string localIp;
             std::uint32_t port;

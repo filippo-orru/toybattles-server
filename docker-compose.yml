@@ -48,7 +48,6 @@ services:
       - .env
     ports:
       - "13005:13005"
-      - "14005:14005"
     volumes:
       - ./Setup/config.docker.ini:/app/Setup/config.ini:ro
       - ./data/:/app/data/:ro
@@ -65,7 +64,6 @@ services:
       - .env
     ports:
       - "13006:13006"
-      - "14006:14006"
     volumes:
       - ./Setup/config.docker.ini:/app/Setup/config.ini:ro
       - ./data/:/app/data/:ro

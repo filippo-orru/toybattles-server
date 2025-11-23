@@ -58,23 +58,25 @@ namespace Common
                 if (m_iniFile.contains(mainServerSection) && m_iniFile.contains(castServerSection))
                 {
                     ini::IniSection& mainServer = m_iniFile[mainServerSection];
+                    std::string mainHost = mainServer["Host"].as<std::string>();
                     std::string mainIp = mainServer["Ip"].as<std::string>();
                     std::uint32_t mainPort = mainServer["Port"].as<std::uint32_t>();
                     std::uint32_t mainIpcPort = mainServer["IpcPort"].as<std::uint32_t>();
                     bool isPublic = mainServer["IsPublic"].as<bool>();
 
-                    if (mainIp.empty() || mainPort == 0 || mainIpcPort == 0)
+                    if (mainHost.empty() || mainIp.empty() || mainPort == 0 || mainIpcPort == 0)
                     {
                         ::Utils::Logger::log(mainServerSection + " has wrong data in config.ini", ::Utils::LogType::Error, "SetupParser::checkMainCastSession");
                         return false;
                     }
 
                     ini::IniSection& castServer = m_iniFile[castServerSection];
+                    std::string castHost = castServer["Host"].as<std::string>();
                     std::string castIp = castServer["Ip"].as<std::string>();
                     std::uint32_t castPort = castServer["Port"].as<std::uint32_t>();
                     std::uint32_t castIpcPort = castServer["IpcPort"].as<std::uint32_t>();
 
-                    if (castIp.empty() || castPort == 0 || castIpcPort == 0)
+                    if (castHost.empty() || castIp.empty() || castPort == 0 || castIpcPort == 0)
                     {
                         ::Utils::Logger::log(castServerSection + " has wrong data in config.ini", ::Utils::LogType::Error, "SetupParser::checkMainCastSession");
                         return false;
@@ -102,6 +104,12 @@ namespace Common
             }
 
             ini::IniSection& authServer = m_iniFile["AuthServer"];
+            if (!authServer.contains("Host") || authServer["Host"].as<std::string>().empty())
+            {
+                ::Utils::Logger::log("Missing/empty Host in 'AuthServer' section", ::Utils::LogType::Error, "SetupParser::checkAuthSection");
+                return false;
+            }
+            
             if (!authServer.contains("Ip") || authServer["Ip"].as<std::string>().empty())
             {
                 ::Utils::Logger::log("Missing/empty Ip in 'AuthServer' section", ::Utils::LogType::Error, "SetupParser::checkAuthSection");
@@ -195,6 +203,7 @@ namespace Common
         AuthSetup SetupParser::getAuthSetupImpl()
         {
             AuthSetup auth;
+            auth.host = m_iniFile["AuthServer"]["Host"].as<std::string>();
             auth.ip = m_iniFile["AuthServer"]["Ip"].as<std::string>();
             auth.port = m_iniFile["AuthServer"]["Port"].as<std::uint32_t>();
             return auth;
@@ -265,6 +274,7 @@ namespace Common
                 if (sectionName.find("MainServer_") == 0)
                 {
                     MainSetup main;
+                    main.host = section["Host"].as<std::string>();
                     main.ip = section["Ip"].as<std::string>();
                     main.port = section["Port"].as<std::uint32_t>();
                     main.ipcPort = section["IpcPort"].as<std::uint32_t>();
@@ -290,6 +300,7 @@ namespace Common
                 if (sectionName.find("CastServer_") == 0)
                 {
                     CastSetup cast;
+                    cast.host = section["Host"].as<std::string>();
                     cast.ip = section["Ip"].as<std::string>();
                     cast.port = section["Port"].as<std::uint32_t>();
                     cast.ipcPort = section["IpcPort"].as<std::uint32_t>();

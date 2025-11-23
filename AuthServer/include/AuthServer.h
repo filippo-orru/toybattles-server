@@ -21,7 +21,7 @@ namespace Auth
 		Auth::Persistence::PersistentDatabase m_database;
 
 	public:
-		AuthServer(ioContext& io_context, const std::string& ip, std::uint16_t port);
+		AuthServer(ioContext& io_context, const std::string& host, std::uint16_t port);
 		void asyncAccept();
 	};
 }

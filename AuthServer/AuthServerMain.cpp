@@ -17,8 +17,8 @@ int main()
 	Utils::Logger::log("Auth server initialized on " + time_s, Utils::LogType::Info, "AuthServer");
 	auto parsedServerInfo = Common::Utils::SetupParser::getInstance().getAuthSetup();
 
-	Utils::Logger::log(std::format("Server Information: IP: {},  Port: {}",
-		parsedServerInfo.ip, parsedServerInfo.port), Utils::LogType::Normal);
+	Utils::Logger::log(std::format("Server Information: Host: {},  Port: {}",
+		parsedServerInfo.host, parsedServerInfo.port), Utils::LogType::Normal);
 
 	const std::string banner = R"(
 
@@ -40,7 +40,7 @@ int main()
 
 
 	asio::io_context io_context;
-	Auth::AuthServer srv(io_context, parsedServerInfo.ip, parsedServerInfo.port);
+	Auth::AuthServer srv(io_context, parsedServerInfo.host, parsedServerInfo.port);
 	srv.asyncAccept();
 	io_context.run();
 }

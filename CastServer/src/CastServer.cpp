@@ -19,11 +19,11 @@ namespace Cast
 		m_positionTimer->async_wait([this](auto) { tickPositionFlush(); });
 	}
 
-	CastServer::CastServer(ioContext& io_context, const std::string& serverIp, std::uint16_t port, std::uint16_t mainPort, std::uint16_t serverId)
+	CastServer::CastServer(ioContext& io_context, const std::string& host, std::uint16_t port, std::uint16_t mainPort, std::uint16_t serverId)
 		: m_io_context{ io_context }
-		, m_acceptor{ io_context, tcp::endpoint(asio::ip::address::from_string(serverIp), port) }
+		, m_acceptor{ io_context, tcp::endpoint(asio::ip::address::from_string(host), port) }
 		, m_serverId{ serverId }
-		, m_mainServerAcceptor{ io_context, tcp::endpoint(asio::ip::address::from_string(Common::Utils::SetupParser::getInstance().getSelfCastServerInfo().ip), mainPort) }
+		, m_mainServerAcceptor{ io_context, tcp::endpoint(asio::ip::address::from_string(Common::Utils::SetupParser::getInstance().getSelfCastServerInfo().host), mainPort) }
 	{
 		using namespace std::chrono;
 		

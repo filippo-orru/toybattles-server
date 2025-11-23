@@ -65,9 +65,9 @@ namespace Main
 	MainServer::MainServer(ioContext& io_context, boost::asio::io_context& boost_io_context, const Common::Utils::MainSetup& mainSetup, std::uint32_t websitePort)
 		: m_io_context{ io_context }
 		, m_io_context_boost{ boost_io_context }
-		, m_acceptor{ io_context, tcp::endpoint(asio::ip::address::from_string(mainSetup.ip), mainSetup.port) }
-		, m_ipcServerAcceptor{ io_context, tcp::endpoint(asio::ip::address::from_string(mainSetup.ip), mainSetup.ipcPort) }
-		, m_httpServerAcceptor{ boost_io_context, boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(mainSetup.ip), websitePort) }
+		, m_acceptor{ io_context, tcp::endpoint(asio::ip::address::from_string(mainSetup.host), mainSetup.port) }
+		, m_ipcServerAcceptor{ io_context, tcp::endpoint(asio::ip::address::from_string(mainSetup.host), mainSetup.ipcPort) }
+		, m_httpServerAcceptor{ boost_io_context, boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(mainSetup.host), websitePort) }
 		, m_serverId{ static_cast<std::uint16_t>(mainSetup.serverNumber) }
 		, m_database{ }
 		, m_isPublic{ mainSetup.isPublic }

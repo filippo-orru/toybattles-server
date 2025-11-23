@@ -32,7 +32,7 @@ namespace Cast
 		Ac::AntiCheatManager m_acManager;
 
 	public:
-		CastServer(ioContext& io_context, const std::string& serverIp, std::uint16_t port, std::uint16_t mainPort, std::uint16_t serverId);
+		CastServer(ioContext& io_context, const std::string& host, std::uint16_t port, std::uint16_t mainPort, std::uint16_t serverId);
 		void asyncAccept();
 		void asyncAcceptMainServer();
 		void tickPositionFlush();

@@ -79,13 +79,13 @@ int main()
 	boost::asio::io_context io_context_boost;
 
 	auto parsedServerInfo = Common::Utils::SetupParser::getInstance().getSelfMainServerInfo();
-	Utils::Logger::log(std::format("Server Information: IP: {},  Port: {},  IPC Port: {},  Server Number: {}",
-		parsedServerInfo.ip, parsedServerInfo.port,
+	Utils::Logger::log(std::format("Server Information: Host: {},  Port: {},  IPC Port: {},  Server Number: {}",
+		parsedServerInfo.host, parsedServerInfo.port,
 		parsedServerInfo.ipcPort, parsedServerInfo.serverNumber),
 		Utils::LogType::Normal);
 
 	auto websiteInfo = Common::Utils::SetupParser::getInstance().getWebsiteSetup();
-	Utils::Logger::log(std::format("Website Information: IP: {},  Port: {}",
+	Utils::Logger::log(std::format("Website Information: Host: {},  Port: {}",
 		websiteInfo.ip, websiteInfo.port), Utils::LogType::Normal);
 
 	const std::string banner = R"(
