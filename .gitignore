@@ -417,7 +417,7 @@ MainServer/x64/
 MainServer/Release/
 Microvolts-Emulator-V2/
 
-ExternalLibraries/CommonLib/Common.lib
+ExternalLibraries/CommonLib
 
 db_data/
 **/.DS_Store

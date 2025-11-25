@@ -15,11 +15,16 @@ if [ -z "$CC" ] || [ -z "$CXX" ]; then
     exit 1
 fi
 
-# Clean vcpkg_installed to force rebuild of dependencies with GCC
-# This is necessary because vcpkg defaults to Clang on macOS, causing ABI mismatches (libc++ vs libstdc++)
-if [ -d "vcpkg_installed" ]; then
-    echo "Removing existing vcpkg_installed to force rebuild with GCC..."
-    rm -rf vcpkg_installed
+# Clean build directory to remove old CMake cache if --clean is passed
+if [ "$2" == "--clean" ]; then
+    if [ -d "$BUILD_DIR" ]; then
+        echo "Cleaning build directory..."
+        rm -rf "$BUILD_DIR"
+    fi
+    if [ -d "vcpkg_installed" ]; then
+        echo "Cleaning vcpkg_installed directory..."
+        rm -rf "vcpkg_installed"
+    fi
 fi
 
 # Set up vcpkg
@@ -38,10 +43,13 @@ fi
 BUILD_DIR="build"
 BUILD_TYPE="${1:-Release}"
 
-# Clean build directory to remove old CMake cache
-# rm -rf "$BUILD_DIR"
+# Build type must be either Release or Debug
+if [ "$BUILD_TYPE" != "Release" ] && [ "$BUILD_TYPE" != "Debug" ]; then
+    echo "Error: Invalid build type '$BUILD_TYPE'. Use 'Release' or 'Debug'."
+    exit 1
+fi
 
-echo "Building with Ninja (Build Type: $BUILD_TYPE)..."
+echo "Building ($BUILD_TYPE)..."
 
 cmake -B "$BUILD_DIR" -S . \
     -G Ninja \
@@ -50,4 +58,4 @@ cmake -B "$BUILD_DIR" -S . \
 
 cmake --build "$BUILD_DIR" --config "$BUILD_TYPE"
 
-echo "Build complete!"
+echo "Build complete! Took $(($SECONDS / 60)) minutes and $(($SECONDS % 60)) seconds."

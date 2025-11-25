@@ -39,10 +39,6 @@ else()
     target_compile_options(MainServer PUBLIC -w)
 endif()
 
-set_target_properties(MainServer PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}
-)
-
 
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
@@ -60,6 +56,3 @@ else()
     target_compile_options(MainServer PUBLIC -w)
 endif()
 
-set_target_properties(MainServer PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}
-)

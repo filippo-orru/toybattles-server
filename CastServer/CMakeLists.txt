@@ -27,7 +27,3 @@ if (WIN32)
     target_link_libraries(CastServer PUBLIC wsock32 ws2_32)
 endif()
 
-set_target_properties(CastServer PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}
-)
-
