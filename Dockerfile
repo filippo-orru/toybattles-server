@@ -51,9 +51,9 @@ RUN apt-get install -y \
 
 WORKDIR /app
 
-COPY --from=builder /app/AuthServer.elf .
-COPY --from=builder /app/MainServer.elf .
-COPY --from=builder /app/CastServer.elf .
+COPY --from=builder /app/build/Output/AuthServer.elf .
+COPY --from=builder /app/build/Output/MainServer.elf .
+COPY --from=builder /app/build/Output/CastServer.elf .
 
 COPY ./docker/docker-entrypoint.sh .
 RUN chmod +x ./docker-entrypoint.sh
