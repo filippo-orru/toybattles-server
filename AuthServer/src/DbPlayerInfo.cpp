@@ -125,8 +125,10 @@ namespace Auth
 				if (res->next())
 				{
 					const std::uint32_t playerGrade = static_cast<std::uint32_t>(res->getInt("Grade"));
+					auto const selfAuthInfo = Common::Utils::SetupParser::getInstance().getAuthSetup();
+					const std::uint32_t gradeRequiring2FA = selfAuthInfo.gradeRequiring2FA;
 					const std::string secret = res->getString("Secret").c_str();
-					if (playerGrade >= Common::Enums::PlayerGrade::GRADE_ES && secret.empty())
+					if (playerGrade >= gradeRequiring2FA && secret.empty())
 					{ // >= MOD grade must mandatorily have 2FA enabled
 						playerInfo.setExtra(Auth::Enums::Login::INCORRECT);
 						return std::pair{ playerInfo, playerInfoStructure };
@@ -214,8 +216,7 @@ namespace Auth
 				}
 			};
 
-			try
-			{
+			try {
 				if (!isLoginOk)
 				{ // Phase 1: given password is user password. Check that it's correct and return immediately, so they can login again for phase 2 (token)
 					return verifyUserCredentials();

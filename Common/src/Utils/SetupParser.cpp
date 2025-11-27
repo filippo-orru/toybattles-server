@@ -121,6 +121,12 @@ namespace Common
                 ::Utils::Logger::log("Missing or invalid Port in 'AuthServer' section", ::Utils::LogType::Error, "SetupParser::checkAuthSection");
                 return false;
             }
+
+            if (!authServer.contains("GradeRequiring2FA"))
+            {
+                ::Utils::Logger::log("Missing GradeRequiring2FA in 'AuthServer' section", ::Utils::LogType::Error, "SetupParser::checkAuthSection");
+                return false;
+            }
             return true;
         }
 
@@ -206,6 +212,7 @@ namespace Common
             auth.host = m_iniFile["AuthServer"]["Host"].as<std::string>();
             auth.ip = m_iniFile["AuthServer"]["Ip"].as<std::string>();
             auth.port = m_iniFile["AuthServer"]["Port"].as<std::uint32_t>();
+            auth.gradeRequiring2FA = m_iniFile["AuthServer"]["GradeRequiring2FA"].as<std::uint32_t>();
             return auth;
         }
 

@@ -17,6 +17,8 @@ namespace Common
             std::string host;
             std::string ip;
             std::uint32_t port;
+            // All players with this grade or higher must have 2FA enabled
+            std::uint32_t gradeRequiring2FA; 
         };
 
         struct MainSetup

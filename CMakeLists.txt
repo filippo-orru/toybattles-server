@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.30)
 
 set(CMAKE_C_COMPILER "gcc-13")
 set(CMAKE_CXX_COMPILER "g++-13")
@@ -19,7 +19,7 @@ endif()
 find_package(Threads REQUIRED)
 
 # Prefer Ninja generator if available
-set(CMAKE_GENERATOR "Ninja" CACHE STRING "Build system generator" FORCE)
+# set(CMAKE_GENERATOR "Ninja" CACHE STRING "Build system generator" FORCE)
 if (WIN32)
     add_compile_definitions(_WIN32_WINNT=0x0601)
     if (MSVC)
@@ -51,8 +51,17 @@ else()
     message(FATAL_ERROR "Unsupported platform")
 endif()
 
-#find_package(Boost REQUIRED COMPONENTS system json beast asio)
-find_package(Boost CONFIG REQUIRED COMPONENTS system json beast asio)
+# Try CONFIG mode first (works on Linux with vcpkg)
+find_package(Boost CONFIG QUIET COMPONENTS system json beast asio)
+
+# If CONFIG mode fails, try MODULE mode (works on Windows with vcpkg)
+if(NOT Boost_FOUND)
+    set(Boost_USE_STATIC_LIBS ON)
+    set(Boost_USE_MULTITHREADED ON)
+    find_package(Boost REQUIRED COMPONENTS system json)
+    # Note: beast and asio are header-only, so we only need system and json as compiled components
+endif()
+
 find_package(OpenSSL REQUIRED)
 find_package(cryptopp CONFIG REQUIRED)
 find_package(range-v3 CONFIG REQUIRED)
