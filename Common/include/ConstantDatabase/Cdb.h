@@ -31,11 +31,11 @@ namespace Common
 			{
 				if constexpr (std::is_same_v<MapType, std::unordered_map<std::uint32_t, T>>) 
 				{
-					if (entries.contains(value.getId())) 
-					{
-						::Utils::Logger::log("Duplicate key found in cached CDB entries: " + std::to_string(value.getId()) + ", T = " + typeid(T).name(), 
-							::Utils::LogType::Warning);
-					}
+					// if (entries.contains(value.getId())) 
+					// {
+					// 	::Utils::Logger::log("Duplicate key found in cached CDB entries: " + std::to_string(value.getId()) + ", T = " + typeid(T).name(), 
+					// 		::Utils::LogType::Warning);
+					// }
 					entries[value.getId()] = value;
 				}
 				else if constexpr (std::is_same_v<MapType, std::unordered_map<std::uint32_t, std::vector<T>>>) 
