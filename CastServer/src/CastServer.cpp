@@ -378,18 +378,9 @@ namespace Cast
 				{
 					asio::ip::tcp::endpoint remoteEndpoint = m_mainSocket->remote_endpoint();
 
-					if (remoteEndpoint.address() == asio::ip::address::from_string(Common::Utils::SetupParser::getInstance().getSelfMainServerInfo().ip) ||
-						remoteEndpoint.address() == asio::ip::address::from_string("::1"))
-					{
-						auto mainIpc = std::make_shared<Common::Network::Session>(std::move(*m_mainSocket), nullptr);
-						mainIpc->m_checkValidSession = false;
-						mainIpc->sendConnectionACK(Common::Enums::IPC_SERVER);
-					}
-					else
-					{
-						::Utils::Logger::log("Unauthorized connection attempt from IP " + remoteEndpoint.address().to_string(), ::Utils::LogType::Warning);
-						m_mainSocket->close();
-					}
+					auto mainIpc = std::make_shared<Common::Network::Session>(std::move(*m_mainSocket), nullptr);
+					mainIpc->m_checkValidSession = false;
+					mainIpc->sendConnectionACK(Common::Enums::IPC_SERVER);
 				}
 				asyncAcceptMainServer();
 			});

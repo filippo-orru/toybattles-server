@@ -404,19 +404,9 @@ namespace Main
 				if (!error)
 				{
 					asio::ip::tcp::endpoint remoteEndpoint = m_ipcSocket->remote_endpoint();
-					if (remoteEndpoint.address() == asio::ip::address::from_string(Common::Utils::SetupParser::getInstance().getAuthSetup().ip)
-						|| remoteEndpoint.address() == asio::ip::address::from_string(Common::Utils::SetupParser::getInstance().getSelfCastServerInfo().ip))
-					{
-						auto authIpc = std::make_shared<Common::Network::Session>(std::move(*m_ipcSocket), nullptr);
-						authIpc->m_checkValidSession = false;
-						authIpc->sendConnectionACK(Common::Enums::IPC_SERVER);
-					}
-					else
-					{
-						Utils::Logger::log("Unauthorized connection attempt from IP: " + remoteEndpoint.address().to_string(), Utils::LogType::Warning,
-							"MainServer::asyncAcceptAuthServer");
-						m_ipcSocket->close();
-					}
+					auto authIpc = std::make_shared<Common::Network::Session>(std::move(*m_ipcSocket), nullptr);
+					authIpc->m_checkValidSession = false;
+					authIpc->sendConnectionACK(Common::Enums::IPC_SERVER);
 				}
 				asyncAcceptIpcServer();
 			});
