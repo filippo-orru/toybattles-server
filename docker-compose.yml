@@ -7,7 +7,6 @@ services:
       MYSQL_USER: admin
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-      lower_case_table_names: 1
     env_file:
       - .env
     ports:
@@ -15,6 +14,7 @@ services:
     volumes:
       - ./db_data:/var/lib/mysql
       - ./microvolts-db.sql:/docker-entrypoint-initdb.d/microvolts-db.sql
+      - ./docker/mariadb_config.cnf:/etc/my.cnf:ro
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u admin -p$DB_PASSWORD"]
       start_period: 2s
